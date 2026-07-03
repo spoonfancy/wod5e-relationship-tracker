@@ -6,6 +6,18 @@
     border:1px solid #66000055;
     margin:4px 0;
     align-items:center;
+}.rel-card {
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid #66000055;
+  margin: 4px 0;
+  align-items: center;
+}
+
+.rel-card img {
+  width: 32px;
+  height: 32px;
 }
 
 .rel-card img {
