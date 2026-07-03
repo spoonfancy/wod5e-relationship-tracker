@@ -11,7 +11,62 @@ Hooks.on("renderActorSheet", (app, html, data) => {
 
     if (!app.actor) return;
     if (app.actor.type !== "vampire") return;
+Hooks.on("renderActorSheet", (app, html) => {
 
+  if (!app.actor || app.actor.type !== "vampire") return;
+
+  const get = () => app.actor.getFlag("wod5e","relationships") ?? [];
+  const save = (data) => app.actor.setFlag("wod5e","relationships",data);
+
+  if (!html.find(".relationships-tab").length) {
+
+    html.find(".sheet-tabs").append(
+      `<a class="item" data-tab="relationships">Relationships</a>`
+    );
+
+    html.find(".sheet-body").append(`
+      <div class="tab relationships-tab" data-tab="relationships">
+        <button class="rel-add">+ Add Relationship</button>
+        <div class="rel-list"></div>
+      </div>
+    `);
+
+  }
+
+  const render = () => {
+    const rels = get();
+    html.find(".rel-list").html(rels.map(r => `
+      <div class="rel-card" data-id="${r.id}">
+        <img src="${r.img || 'icons/svg/mystery-man.svg'}"/>
+        <strong>${r.name}</strong>
+        <span>${r.type}</span>
+        <button class="rel-del">X</button>
+      </div>
+    `).join(""));
+  };
+
+  render();
+
+  html.find(".rel-add").click(async () => {
+    const rels = get();
+    rels.push({
+      id: foundry.utils.randomID(),
+      name: "New Relationship",
+      type: "ally",
+      img: "icons/svg/mystery-man.svg"
+    });
+    await save(rels);
+    render();
+  });
+
+  html.find(".rel-del").click(async (ev) => {
+    const id = ev.currentTarget.closest(".rel-card").dataset.id;
+    const rels = get().filter(r => r.id !== id);
+    await save(rels);
+    render();
+  });
+
+});
     const tabButton = `<a class="item" data-tab="relationships">Relationships</a>`;
 
     const tabContent = `
