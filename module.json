@@ -10,7 +10,17 @@
 "download": "https://github.com/YOUR_USERNAME/wod5e-relationship-tracker/archive/refs/heads/main.zip"
   "esmodules": [
     "scripts/main.js"
-  ],
+  ],{
+  "id": "wod5e-relationship-tracker",
+  "title": "WoD5e Relationship Tracker",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "esmodules": ["scripts/main.js"],
+  "styles": ["styles/relationships.css"]
+}
   "styles": [
     "styles/relationships.css"
   ],
